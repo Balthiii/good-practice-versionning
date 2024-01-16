@@ -1,4 +1,6 @@
-# Maitrise du versionning
+# Prise de note du 15 janvier 2024
+
+## Maitrise du versionning
 
 ## Subversion 
 SVN = Système de contrôle de version centralisée
@@ -116,3 +118,91 @@ git tag -a v1.0 -m "Version 1.0"
 ##### Desindexer des elements deja commits
 
 TODO: A completer
+
+
+# Prise de note du 16 janvier 2024 
+
+## Les branches 
+
+Pour créer une branche il suffit d'utiliser la commande suivante : 
+```sh
+git branch <NomDeLaBranche>
+```
+
+Git branche créer une nouvelle branche mais ne vous fait pas basculer vers cette dernière. 
+
+Pour basculer sur une autre branche on utilise la commande suivante : 
+
+```sh
+git checkout <NomDeLaBranche>
+```
+**Note :** HEAD est considéré comme un pointeur sur le dernier commit de notre branche courante. 
+
+### Fusionner des branches 
+
+Imaginons que nous avons une branche intitulé 'iss53' et 'iss54'.
+
+On va commmencer à travailler sur 'iss53' et effectuer un premier commit: 
+
+```sh
+git commit -m "commit 3"
+```
+
+Ensuite on rebascule sur la branche master afin d'effectuer un hotfix: 
+
+```sh
+git checkout master 
+```
+
+
+```sh
+git branch hotfix 
+git commit -m "commit -4"
+```
+Nous sommes satisfait du hotfix et nous allons le valider : 
+
+```sh
+git checkout master
+git merge hotfix
+```
+Ici nous avons intégré la branche hotfix à la branche master
+
+La branche hotfix n'a maintenant plus lieu d'être et nous allons la supprimer 
+
+```sh
+git branch -d hotfix
+```
+
+On va maintenant retoruner sur iss53 et continuer à travailler dessus
+
+```sh
+git checkout iss53
+```
+On effectue un nouveau commit afin de valider notre travaill 
+
+```sh
+git commit -m "commit 5"
+```
+
+On retourne ensuite sur master et effectuons un merger avec iss53
+
+```sh
+git checkout master 
+git merge iss53
+```
+La stratégie de merge est alors différente de celle utilisée précédemment : Merge commit 
+
+Au lieu d'avancer la branche master, Git crée un nouveau commit qui contient les différences entre les deux branches. 
+
+On peut maintenant supprimer la branche iss53:
+
+```sh
+git branch -d iss53
+```
+### Résoudre les conflits 
+
+Un conflit a lieu lorsque deux branches différentes ont modifiées la même partie du même fichier, ou si un fichier à été supprimer dans une branche alors qu'il a été modifié dans une autre. 
+
+Physiquement, un conflit est réprésenté par des caractères spéciaux qui apparaissent dans le fichier. 
+
+Après résolution du conflit il suffit de commit.
