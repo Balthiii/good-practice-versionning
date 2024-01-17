@@ -272,6 +272,8 @@ git push origin --delete une-branche
 ```
 ## Rebaser votre travail 
 
+**HISTORIQUE LINEAIRE**
+
 Avec git il y a deux manières d'intégrer les modifications d'une branche dans une autre :
 - La fusion (merge)
 - Le rebasage (rebase)
@@ -289,3 +291,35 @@ Attention :La commande rebase supprime une partie des commits.
 
 Quand on rebase on possède un historique divergent qui se transforme en historique linéaire. 
 
+La commande qui correspond au rebase cité en cours :
+
+```sh
+git rebase --onto master server client
+```
+Essaye d'extraire la branche client de la brancher server et de la rebaser sur la branche master. 
+
+```sh
+git checkout master
+git merge client
+```
+On peut aussi rebaser la brancher server sur la branche master :
+
+ ```sh
+ git rebase master server 
+ ```
+
+ Vous pouvez ensuite merge server dans master : 
+
+ ```sh
+ git checkout master
+ git merge server
+ ```
+### Important
+Rebase or not Rebase ? 
+
+La seule règle à respecter avec la commande rebase : ne jamais rebase des modifications qui ont été publiées sur un serveur distant(push).
+
+Questions exams : 
+Que se passe t'il si on rebase des commits qui ont déjà été push ? 
+
+ Si vous poussez des commits quelque part, que d’autres les tirent et se basent dessus pour travailler, et qu’après coup, vous réécrivez ces commits à l’aide de git rebase et les poussez à nouveau, vos collaborateurs devront re-fusionner leur travail et les choses peuvent rapidement devenir très désordonnées quand vous essaierez de tirer leur travail dans votre dépôt.
