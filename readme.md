@@ -206,3 +206,86 @@ Un conflit a lieu lorsque deux branches différentes ont modifiées la même par
 Physiquement, un conflit est réprésenté par des caractères spéciaux qui apparaissent dans le fichier. 
 
 Après résolution du conflit il suffit de commit.
+
+# Prise de note du 17 janvier 2024
+## (suite résolution de conflit)
+
+Vous avez un outil qui permet de résoudre les conflits avec git : 
+
+```sh
+git mergepool
+```
+
+Pour afficher toutes les branches : 
+```sh
+git branch -a
+git branch --all
+```
+
+Nous allons parler de la commande git fetch : Cette commande permet de synchroniser votre travaux, elle va recherche le serveur qui héberge et va récupérer les modifications qui on étét effectuées sur le serveur distant. 
+
+```sh
+
+```
+## Pousser des modifications 
+
+```sh
+git push <distant> <branche>
+git push origin master
+git push -u origin master
+```
+
+Pour récupérer les modifications effectuées sur le serveur distant à propos de nouvelles branches ou de branches existantes : 
+```sh 
+git fetch <distant>
+```
+Pour récupérer des modifications et les fusionner avec vos branches locales : 
+```sh
+git pull <distant> <branche>
+```
+La regle d'or lorsque l'on débute avec Git :
+commit -> pull -> push
+
+Lorsque vous récupérez des branches distantes avec la commande fetch, vous ne créer pas automatiquement une branche local qui suit la branche distante. Vous devez créer une branche locale et la lier à la branche distante. 
+
+```sh
+git checkout -b <nom-de-branche> <distant>/<nom-de-branche>
+branch <nom-de-branche> set up to track remote branch <nom-de-branche> from <distant>.ah
+```
+
+On a un raccourci pour cette commande : 
+
+```sh
+git checkout --track <distant>/<nom-de-branche>
+```
+Il y a meme encore plus court, si la branche locale n'existe pas encore :
+
+```sh
+git checkout <nom-de-branche>
+```
+```sh
+git branch -vv 
+```
+Analysons la commande suivante :
+```sh
+git push origin --delete une-branche
+```
+## Rebaser votre travail 
+
+Avec git il y a deux manières d'intégrer les modifications d'une branche dans une autre :
+- La fusion (merge)
+- Le rebasage (rebase)
+
+Fusion:
+Lorsque l'on merge on se place dans la branche où on veut faire la modification.
+
+Avec le rebase on aurait entré les commandes suivantes : 
+
+```sh
+git checkout experiment
+git rebase master 
+```
+Attention :La commande rebase supprime une partie des commits. 
+
+Quand on rebase on possède un historique divergent qui se transforme en historique linéaire. 
+
